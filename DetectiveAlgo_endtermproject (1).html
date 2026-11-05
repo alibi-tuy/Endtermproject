@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Detective Algo: A Noir Case in Nine Acts</title>
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fff;--card:#fff;--ink:#111;--mut:#333;--acc:#e11d48;--line:#111;--code:#efefef;--dot:#00000026;--ok:#22c55e;--bad:#ff6b81;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0b0b10;--card:#16161e;--ink:#f5f5f5;--mut:#d0d0d8;--acc:#ff4d6d;--line:#f5f5f5;--code:#22222c;--dot:#ffffff22}}
+:root[data-theme="dark"]{--bg:#0b0b10;--card:#16161e;--ink:#f5f5f5;--mut:#d0d0d8;--acc:#ff4d6d;--line:#f5f5f5;--code:#22222c;--dot:#ffffff22}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;color:var(--ink);font:17px/1.55 "Comic Neue","Trebuchet MS",sans-serif;background:radial-gradient(var(--dot) 1.3px,transparent 1.6px) 0 0/9px 9px,var(--bg)}
+main{max-width:780px;margin:0 auto;padding:16px 16px 60px}
+nav{display:flex;gap:6px;overflow-x:auto;padding:10px 4px 14px;font:400 16px Bangers,Impact,sans-serif;letter-spacing:.05em}
+nav a{flex:none;padding:3px 11px;border:3px solid var(--line);color:var(--ink);text-decoration:none;background:var(--card);box-shadow:3px 3px 0 var(--line)}
+nav a.on{background:var(--acc);color:#fff}
+h1,h2{font-family:Bangers,Impact,sans-serif;font-weight:400;letter-spacing:.04em;text-transform:uppercase;line-height:1.1}
+h2{font-size:32px;margin:.35em 0 .5em;display:inline-block;background:var(--ink);color:var(--bg);padding:4px 16px;transform:skew(-6deg);box-shadow:5px 5px 0 var(--acc)}
+.sfx{float:right;font:400 34px Bangers,Impact,sans-serif;color:var(--acc);transform:rotate(8deg);text-shadow:2px 2px 0 var(--line);letter-spacing:.05em}
+.cover{text-align:center;padding:30px 14px;border:4px solid var(--line);box-shadow:8px 8px 0 var(--line);background:repeating-conic-gradient(from 0deg at 50% 38%,var(--dot) 0 2.2deg,transparent 2.2deg 9deg),var(--card)}
+.cover .em{font-size:68px}
+.cover h1{font-size:clamp(40px,11vw,66px);margin:.1em 0;text-shadow:4px 4px 0 var(--acc)}
+.cover p{font-weight:700}
+.btn{display:inline-block;background:var(--acc);color:#fff;padding:7px 22px;text-decoration:none;font:400 21px Bangers,Impact,sans-serif;letter-spacing:.06em;border:3px solid var(--line);box-shadow:4px 4px 0 var(--line);cursor:pointer}
+.btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--line)}
+.toc{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin-top:26px;text-align:left}
+.toc a{background:var(--card);border:3px solid var(--line);padding:8px 12px;text-decoration:none;color:var(--ink);font-weight:700;box-shadow:4px 4px 0 var(--line)}
+.toc a:hover{background:var(--acc);color:#fff}
+.toc b{font-family:Bangers,Impact,sans-serif;font-weight:400;font-size:20px;color:var(--acc)}
+.card{background:var(--card);border:3px solid var(--line);box-shadow:6px 6px 0 var(--line);padding:14px 18px;margin:20px 0}
+.story{position:relative;border-radius:28px;margin-bottom:34px;font-weight:700}
+.story::before{content:"";position:absolute;left:34px;bottom:-24px;border:14px solid transparent;border-top:22px solid var(--line);border-bottom:0}
+.story::after{content:"";position:absolute;left:37px;bottom:-17px;border:11px solid transparent;border-top:17px solid var(--card);border-bottom:0}
+.who{display:inline-block;background:var(--acc);color:#fff;font:400 17px Bangers,Impact,sans-serif;letter-spacing:.06em;padding:0 8px;margin-right:8px;transform:rotate(-3deg)}
+.tag{display:inline-block;background:var(--ink);color:var(--bg);font:400 16px Bangers,Impact,sans-serif;letter-spacing:.08em;padding:1px 10px;margin-bottom:6px;text-transform:uppercase}
+.fact{background:#ffe14d;color:#111;border:3px solid var(--line);box-shadow:5px 5px 0 var(--line);padding:10px 16px;margin:20px 0;font-weight:700}
+pre{background:var(--code);color:var(--ink);padding:12px;border:2px solid var(--line);overflow-x:auto;font:13.5px/1.5 ui-monospace,Menlo,Consolas,monospace;margin:8px 0}
+code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.88em;background:var(--code);padding:1px 5px;border:1px solid var(--line)}
+.opt{display:block;width:100%;text-align:left;margin:8px 0;padding:8px 12px;border:3px solid var(--line);background:var(--card);color:var(--ink);font:700 16px "Comic Neue",sans-serif;cursor:pointer;box-shadow:3px 3px 0 var(--line)}
+.opt:hover:not(:disabled){background:#ffe14d;color:#111}
+.opt.ok{background:var(--ok);color:#111}.opt.no{background:var(--bad);color:#111}
+.why{font-weight:700;margin-top:8px}
+.pager{display:flex;justify-content:space-between;margin-top:30px}
+input[type=range]{width:100%;accent-color:var(--acc)}
+.demo label{display:block;font-weight:700;margin-top:8px}
+.big{font:400 40px Bangers,Impact,sans-serif;color:var(--acc);letter-spacing:.04em}
+ul{list-style:none;padding-left:0;margin:6px 0}
+li{margin:9px 0;padding-left:24px;position:relative}
+li::before{content:"▶";position:absolute;left:0;color:var(--acc);font-size:.8em;top:.2em}
+small{color:var(--mut)}
+.cover{padding:0;overflow:hidden;background:var(--card)}
+.issue{display:flex;justify-content:space-between;background:var(--ink);color:var(--bg);font:400 18px Bangers,Impact,sans-serif;letter-spacing:.1em;padding:4px 14px}
+.art{display:block;width:100%;height:auto;border-bottom:4px solid var(--line)}
+.ttl{padding:14px 10px 6px;background:repeating-conic-gradient(from 0deg at 50% 100%,var(--dot) 0 2.2deg,transparent 2.2deg 9deg)}
+.rib{display:inline-block;background:var(--acc);color:#fff;font:700 15px "Comic Neue",sans-serif;padding:2px 14px;transform:skew(-8deg);border:2px solid var(--line)}
+.by{background:var(--ink);color:var(--bg);padding:8px;font:400 19px Bangers,Impact,sans-serif;letter-spacing:.06em;margin-top:10px}
+.by b{color:#ffe14d;font-weight:400}
+
+:root{--bg:#fff6d9;--card:#fff;--ink:#111;--mut:#333;--acc:#e8212c;--line:#111;--code:#f1ecd8;--dot:#e8212c30}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1a3d;--card:#1b2a5a;--ink:#fff;--mut:#d6dcf0;--acc:#ff4d57;--line:#ffd400;--code:#101a40;--dot:#ffffff1f}}
+:root[data-theme="dark"]{--bg:#0f1a3d;--card:#1b2a5a;--ink:#fff;--mut:#d6dcf0;--acc:#ff4d57;--line:#ffd400;--code:#101a40;--dot:#ffffff1f}
+h2{background:#e8212c;color:#fff;border:3px solid #111;box-shadow:5px 5px 0 #111;text-shadow:2px 2px 0 #111;transform:skew(-4deg)}
+.sfx{background:#ffd400;color:#e8212c;text-shadow:none;clip-path:polygon(50% 0%,61% 25%,88% 12%,75% 38%,100% 50%,75% 62%,88% 88%,61% 75%,50% 100%,39% 75%,12% 88%,25% 62%,0% 50%,25% 38%,12% 12%,39% 25%);padding:26px 22px;font-size:25px;white-space:nowrap;transform:rotate(9deg);margin:-14px -4px 0 8px}
+.tag{background:#1f2a44;color:#fff}
+.who{background:#1f2a44}
+.btn{background:#e8212c;color:#ffd400;text-shadow:2px 2px 0 #111}
+nav a.on{background:#e8212c}
+.cover{background:var(--card);border-color:#111;box-shadow:8px 8px 0 #111}
+.issue{background:#111;color:#ffd400}
+.cover .ttl{background:radial-gradient(#ffffff2e 1.6px,transparent 1.9px) 0 0/8px 8px,#1f2a44;padding:14px 8px;border-bottom:4px solid #111}
+.cover .ttl h1{margin:0;color:#ffd400;font-size:clamp(38px,10.5vw,64px);text-shadow:-2px -2px 0 #111,2px -2px 0 #111,-2px 2px 0 #111,2px 2px 0 #111,6px 6px 0 #e8212c}
+.go{padding:14px 10px 2px;text-align:center;background:var(--card);color:var(--ink)}
+.go .btn.lg{font-size:36px;padding:6px 40px}
+.rib{background:#1f2a44;border-color:#111}
+.by{background:#111;color:#fff}.by b{color:#ffd400}
+
+:root{--bg:#efe6cc;--code:#e4d9b8;--dot:#1a1a1a24}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#111318;--card:#1c1f27;--code:#12141a}}
+:root[data-theme="dark"]{--bg:#111318;--card:#1c1f27;--code:#12141a}
+
+:root{--bg:#0c0d11;--card:#171920;--ink:#ece6d3;--mut:#bdb7a5;--acc:#e8212c;--line:#ece6d3;--code:#0a0b0e;--dot:#ffffff12;--sh:#9b111c;color-scheme:dark}
+body{background:repeating-linear-gradient(105deg,#ffffff07 0 1px,transparent 1px 15px),radial-gradient(var(--dot) 1.3px,transparent 1.6px) 0 0/9px 9px,radial-gradient(ellipse at 50% 0,#1b1d27,transparent 70%),var(--bg);background-attachment:fixed}
+h2{background:var(--ink);color:#0c0d11;border:3px solid var(--ink);text-shadow:none;box-shadow:5px 5px 0 var(--acc)}
+.card,.opt,nav a,.btn,.toc a{box-shadow:5px 5px 0 var(--sh)}
+.fact{box-shadow:5px 5px 0 var(--sh);border-color:var(--ink)}
+.tag{background:#2b3350;color:#fff}.who{background:var(--acc)}
+.sfx{filter:drop-shadow(3px 3px 0 #000)}
+.cover{border-color:var(--ink);box-shadow:8px 8px 0 var(--sh)}
+.by{border-top:3px solid var(--ink)}
+.issue{border-bottom:3px solid var(--ink)}
+.opt:hover:not(:disabled){background:#ffd400;color:#111}
+main{padding-bottom:96px}
+.toprow{display:flex;justify-content:space-between;align-items:center;min-height:46px;margin-bottom:4px}
+.toprow .tag{margin-bottom:0}
+.sfx{clip-path:polygon(50.0% 0.0%,59.1% 10.0%,71.7% 5.0%,75.6% 17.9%,89.1% 18.8%,86.9% 32.2%,98.7% 38.9%,91.0% 50.0%,98.7% 61.1%,86.9% 67.8%,89.1% 81.2%,75.6% 82.1%,71.7% 95.0%,59.1% 90.0%,50.0% 100.0%,40.9% 90.0%,28.3% 95.0%,24.4% 82.1%,10.9% 81.2%,13.1% 67.8%,1.3% 61.1%,9.0% 50.0%,1.3% 38.9%,13.1% 32.2%,10.9% 18.8%,24.4% 17.9%,28.3% 5.0%,40.9% 10.0%);padding:28px 26px}
+.toprow .sfx{float:none;flex:none;position:relative;z-index:3;margin:-24px 4px -24px 10px}
+.arr{position:fixed;z-index:20;bottom:16px;width:52px;height:52px;border:3px solid var(--line);background:var(--acc);color:#fff;font:400 26px/1 Bangers,Impact,sans-serif;cursor:pointer;box-shadow:4px 4px 0 var(--sh);display:flex;align-items:center;justify-content:center;padding:0;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.arr:active:not(:disabled){transform:translate(3px,3px);box-shadow:1px 1px 0 var(--sh)}
+.arr:disabled{opacity:.25;cursor:default}
+#prev{left:12px}#next{right:12px}
+@media (min-width:900px){.arr{bottom:auto;top:50%;margin-top:-30px;width:60px;height:60px;font-size:30px}#prev{left:calc(50% - 390px - 90px)}#next{right:calc(50% - 390px - 90px)}}
+@keyframes inr{from{opacity:0;transform:translateX(48px)}to{opacity:1;transform:none}}
+@keyframes inl{from{opacity:0;transform:translateX(-48px)}to{opacity:1;transform:none}}
+#app.in-r{animation:inr .28s ease-out}
+#app.in-l{animation:inl .28s ease-out}
+@media (prefers-reduced-motion:reduce){#app.in-r,#app.in-l{animation:none}}
+</style>
+</head>
+<body>
+<main>
+<nav id="nav"></nav>
+<div id="app"></div>
+</main>
+<button class="arr" id="prev" aria-label="Previous page" title="Previous (←)">◀</button>
+<button class="arr" id="next" aria-label="Next page" title="Next (→)">▶</button>
+<script>
+const C0=[
+{e:"🕵️",t:"The Job: Agents & Environments",w:"Week 1",
+story:"Rain hammers the window of my office in Neon City. Someone has stolen the Golden Dataset from the city vault, and the case lands on my desk. Before I chase anyone, I need to know what I am: what I can sense, what I can do, and how I’ll be judged.",
+pts:["An <b>agent</b> perceives its <b>environment</b> through <b>sensors</b> and acts through <b>actuators</b>. For Algo the sensors are eyes, ears and lab reports; the actuators are legs, radio and handcuffs. Everything else (the city, the suspects) is the environment.",
+"A <b>rational agent</b> picks the action with the best <i>expected</i> result given what it knows. Rational does not mean all-knowing: following the best lead into a trap nobody could foresee is bad luck, not bad reasoning.",
+"<b>PEAS</b> turns a vague job into a spec. <b>P</b>erformance: case solved fast, no innocent arrested. <b>E</b>nvironment: Neon City, rain, unreliable witnesses, a lying Phantom. <b>A</b>ctuators: patrol, interrogate, arrest. <b>S</b>ensors: cameras, fingerprints, statements.",
+"Environment types: fully vs partially observable, deterministic vs stochastic, episodic vs sequential, static vs dynamic, discrete vs continuous. Neon City is partially observable, stochastic (witnesses make mistakes), sequential and dynamic (the Phantom keeps moving). A chess board is fully observable.",
+"Agent designs, from simple to rich: <b>reflex</b> (if–then rules), <b>model-based</b> (remembers where the Phantom was last seen), <b>goal-based</b> (plans a route to the hideout), <b>utility-based</b> (weighs arresting too early against too late). Richer reasoning costs more computation."],
+code:"def detective_reflex(percept):\n    if percept == 'alarm': return 'Rush to the vault'\n    elif percept == 'witness': return 'Interview witness'\n    elif percept == 'rain': return 'Put on trench coat'\n    return 'Keep watching'   # simple reflex agent: percept in, action out",
+fact:"A burglar alarm is a genuine (very simple) reflex agent: sensor in, action out, no memory, no planning.",
+q:{q:"Algo follows the most promising lead, but it turns out to be a trap nobody could have predicted. Was Algo irrational?",o:["Yes, a rational agent never fails","No, rationality is judged by the information available before acting","Only if Algo was a reflex agent"],a:1,why:"Rationality maximizes expected performance given the evidence; it is not omniscience."}},
+
+{e:"🧭",t:"The Chase: Search & A*",w:"Week 2",
+story:"x",
+pts:["A <b>search problem</b> has four parts: a state space, a successor function (actions + costs), a start state and a goal test. A <b>solution</b> is a sequence of actions from start to goal. Here, states are junctions, actions are streets with a cost in minutes, and the goal test is “is this the Phantom’s hideout?”.",
+"A <b>state-space graph</b> shows each junction once. A <b>search tree</b> lists every <i>path</i>, so it can repeat junctions and even go on forever (driving round the block). The <b>frontier</b> (fringe) holds the leads Algo has not yet followed; every algorithm differs only in which lead it picks next.",
+"<b>BFS</b> checks the closest junctions first (FIFO queue): it finds the path with the fewest streets, but needs lots of memory. <b>DFS</b> follows one lead to the end of the alley (LIFO stack): little memory, but may return a long or non-optimal route.",
+"<b>Iterative deepening</b> runs DFS with limits 1, 2, 3… streets to get DFS-like memory with BFS-like preference for shallow answers.",
+"<b>UCS</b> always follows the lead with the smallest path cost <code>g(n)</code> (minutes driven so far), using a priority queue. With positive costs it is complete and optimal. A <b>visited set</b> means “don’t re-check a junction we have already been to”."],
+code:"city = {'Office': ['Harbor', 'Casino'], 'Harbor': ['Docks', 'Bar'],\n        'Casino': ['Bar'], 'Docks': [], 'Bar': ['Hideout'], 'Hideout': []}\nfrom collections import deque\ndef bfs(graph, start, goal):\n    queue = deque([(start, [start])])\n    visited = {start}\n    while queue:\n        spot, path = queue.popleft()      # oldest lead first\n        if spot == goal: return path\n        for nxt in graph[spot]:\n            if nxt not in visited:\n                visited.add(nxt)\n                queue.append((nxt, path + [nxt]))\nprint(bfs(city, 'Office', 'Hideout'))  # ['Office','Harbor','Bar','Hideout']",
+fact:"Swap popleft() for pop() and BFS becomes DFS. One line changes the whole strategy.",
+q:{q:"Office→Harbor takes 2 min, Harbor→Hideout 10. Office→Casino takes 8, Casino→Hideout 1. Both routes use two streets. Which does UCS choose?",o:["Via Harbor (12 min)","Via Casino (9 min)","They tie"],a:1,why:"BFS sees equal depth; UCS compares total cost: 9 < 12."}},
+
+{e:"⭐",t:"The Chase: Search & A*",w:"Week 2",
+story:"x",
+pts:["<code>g(n)</code> = exact cost so far (minutes driven). <code>h(n)</code> = <i>estimated</i> minutes left, the heuristic (the informant’s hunch). <b>A*</b> follows the lead with the smallest <code>f(n) = g(n) + h(n)</code>.",
+"A heuristic is <b>admissible</b> if it never overestimates: <code>0 ≤ h(n) ≤ h*(n)</code>, where h* is the true remaining cost. Straight-line distance to the hideout is admissible, since no street is shorter than a straight line. On a block grid, Manhattan distance works.",
+"<b>Why optimal?</b> Let A be the best way to the hideout and B a worse one on the frontier. Some ancestor n of A is also on the frontier, and f(n) ≤ g(A) &lt; g(B) = f(B). So n is expanded before B, and so is A. An overestimating hunch can break this.",
+"If <code>h = 0</code>, A* is exactly UCS. Better hunches mean fewer junctions checked. (When using a visited set, the heuristic should also be <i>consistent</i>.)",
+"A* cares about total <i>cost</i>, not number of streets. It finds the fewest-streets route only when every street costs the same."],
+code:"import heapq\ngraph = {'Office': [('Harbor', 2), ('Casino', 8)], 'Harbor': [('Docks', 1), ('Bar', 5)],\n         'Casino': [('Bar', 1)], 'Docks': [('Hideout', 7)], 'Bar': [('Hideout', 2)], 'Hideout': []}\nh = {'Office': 6, 'Harbor': 5, 'Casino': 3, 'Docks': 6, 'Bar': 2, 'Hideout': 0}  # informant's hunch\ndef a_star(graph, h, start, goal):\n    pq = [(h[start], 0, start, [start])]   # (f, g, spot, path)\n    best = {start: 0}\n    while pq:\n        f, g, spot, path = heapq.heappop(pq)\n        if spot == goal: return g, path\n        for nxt, minutes in graph[spot]:\n            ng = g + minutes\n            if ng < best.get(nxt, float('inf')):\n                best[nxt] = ng\n                heapq.heappush(pq, (ng + h[nxt], ng, nxt, path + [nxt]))\nprint(a_star(graph, h, 'Office', 'Hideout'))  # (9, ['Office','Harbor','Bar','Hideout'])",
+fact:"A* was published in 1968 by Hart, Nilsson and Raphael while building Shakey, one of the first mobile reasoning robots.",
+q:{q:"Lead A: 4 minutes driven, 8 estimated left. Lead B: 7 driven, 2 estimated left. Which does A* follow?",o:["A, because it has lower g","B, because f=9 < 12","Neither"],a:1,why:"f(A)=12, f(B)=9. A* is happy to have paid more so far if the total looks better."}},
+
+{e:"🚔",t:"The Stakeout Grid: Local Search",w:"Week 3",
+story:"x",
+pts:["<b>Local search</b> keeps one (or a few) complete candidate solutions and improves them step by step. Here a solution is a full patrol layout, and only the final layout matters, not how Algo got there. Key words: <b>state</b> (where each car is parked), <b>neighbor</b> (move one car), <b>objective function</b> (junctions covered, to maximize).",
+"<b>Hill climbing</b> moves to a better neighbor until none exists. It can get stuck at a <b>local maximum</b> (a decent layout nobody can improve by one move), on a <b>plateau</b> (flat region) or along a <b>ridge</b>. <b>Random restarts</b> try again from different starting layouts.",
+"<b>Simulated annealing</b> sometimes accepts a <i>worse</i> layout, with probability <code>e^(−Δ/T)</code>, where Δ &gt; 0 is how much worse the new layout is. High temperature T = adventurous; as T cools it behaves like hill climbing.",
+"<b>Local beam search</b> tracks k layouts that share information. <b>Genetic algorithms</b> evolve a population of layouts using selection, crossover and mutation.",
+"Detective versions of classic problems: patrol placement (maximize coverage, like <b>n-queens</b> avoiding conflicts) and visiting every witness by the shortest route (the <b>travelling salesperson</b>; neighbor = swap two stops). In continuous spaces, <b>gradient descent</b> follows the slope."],
+code:"coverage = [1, 6, 4, 3, 9, 7, 2]   # junctions watched from parking spot 0..6\ndef hill_climb(coverage, i):\n    while True:\n        nbrs = [j for j in (i-1, i+1) if 0 <= j < len(coverage)]\n        best = max(nbrs, key=lambda j: coverage[j])\n        if coverage[best] <= coverage[i]: return i   # no better neighbor\n        i = best\nprint(hill_climb(coverage, 0))   # 1  -> stuck on a local maximum (6)\nprint(hill_climb(coverage, 3))   # 4  -> the true peak (9)",
+fact:"Simulated annealing (Kirkpatrick et al., 1983) is borrowed from metallurgy: cool metal slowly and its atoms settle into a low-energy structure.",
+q:{q:"Why might Algo sometimes accept a worse patrol layout (simulated annealing)?",o:["Because the old layout had a bug","To escape a local maximum","To save memory"],a:1,why:"Occasional downhill moves let the search leave a local peak; cooling then makes it settle."}},
+
+{e:"♟️",t:"The Phantom’s Game: Adversarial Search",w:"Week 4",
+story:"The Phantom isn’t running blindly; he’s playing me. Every move I make, he answers. To catch him I have to think two, four, six moves ahead and assume he’ll play his best.",
+pts:["In <b>adversarial search</b> the opponent is part of the model. This is a two-player zero-sum game: Algo is <b>MAX</b> (maximize the chance of an arrest), the Phantom is <b>MIN</b> (minimize it). We need states, actions, transitions, terminal tests and utilities (+1 caught, −1 escaped).",
+"<b>Minimax</b>: leaves get their utilities, MIN nodes take the minimum of children, MAX nodes the maximum, and values are backed up to the root. It gives the best outcome Algo can <i>guarantee</i> against a perfect Phantom. Cost: O(b<sup>m</sup>).",
+"<b>Alpha–beta pruning</b> tracks α (best for MAX so far) and β (best for MIN so far) and skips branches once α ≥ β: if one street already lets the Phantom slip away, Algo stops studying it. It returns the <i>same</i> root value as minimax, faster. Good move ordering means more pruning.",
+"Real chases are too deep, so we use a <b>depth limit</b> plus an <b>evaluation function</b>, e.g. a weighted sum of features (distance to the Phantom, exits covered…). Danger: the <b>horizon effect</b>, where trouble hides just beyond the cutoff.",
+"<b>Expectimax</b> replaces MIN with <b>chance nodes</b> that take a probability-weighted average. Use it for random events (a guard’s patrol, a dice roll); assuming randomness against a smart Phantom is dangerously optimistic."],
+code:"def minimax(state, algos_turn):\n    if is_terminal(state): return utility(state)   # +1 caught, -1 escaped\n    vals = [minimax(c, not algos_turn) for c in successors(state)]\n    return max(vals) if algos_turn else min(vals)  # Algo maximizes, Phantom minimizes",
+fact:"Deep Blue beat world chess champion Garry Kasparov in 1997. AlphaGo beat Go star Lee Sedol in 2016 by mixing tree search with learned evaluation.",
+q:{q:"Algo (MAX) picks one of three streets. The Phantom (MIN) then picks a reply with scores (3,12,8), (2,4,6) or (14,5,2). What is the minimax value?",o:["14","3","2"],a:1,why:"The Phantom picks 3, 2 and 2; Algo picks the largest: 3. The Phantom would never let Algo reach the 14."}},
+
+{e:"⚖️",t:"The Big Gamble: Rational Decisions",w:"Week 8",
+story:"Stakeout or raid? Wait too long and he vanishes; go in too early and I blow the case. Probability alone won’t tell me what to do. I have to weigh what each outcome is worth.",
+pts:["A 90% chance of success is not enough. Outcomes differ in value, so we attach a <b>utility</b> U(o) to each. <b>Expected utility</b>: <code>EU(a) = Σ P(o|a)·U(o)</code>. The <b>MEU</b> rule picks <code>a* = argmax EU(a)</code>.",
+"Stakeout: 90% a small win (+100), 10% blown cover (−20): 0.9×100 + 0.1×(−20) = 88. Raid: 60% the Phantom is home (+200), 40% a blown case (−50): 0.6×200 + 0.4×(−50) = 100. The raid is riskier, yet has the higher expected utility.",
+"Risk attitudes: a risk-neutral detective maximizes expected value; a risk-averse one has concave utility and fears big losses.",
+"<b>Backup rule:</b> if p is the probability the Phantom gets away, call for backup when <code>p &gt; C_backup / C_loss</code> (assuming backup would prevent the loss). With backup at $2,000 and a lost case at $10,000, the threshold is 0.20.",
+"A model that predicts well is not automatically a good decision-maker. Predictions must be combined with costs."],
+code:"actions = {'Stakeout': ([0.9, 0.1], [100, -20]), 'Raid': ([0.6, 0.4], [200, -50])}\nEU = lambda p, u: sum(x*y for x, y in zip(p, u))\nscores = {k: EU(*v) for k, v in actions.items()}\nprint(scores, max(scores, key=scores.get))   # {'Stakeout': 88, 'Raid': 100} Raid",
+fact:"Expected utility theory goes back to von Neumann and Morgenstern (1944), the same von Neumann behind minimax.",
+q:{q:"The chance the Phantom escapes is 0.15, an escape costs $20,000, and backup costs $2,000. What should Algo do?",o:["Skip backup, 15% is small","Call backup: expected loss $3,000 > $2,000","Cannot be decided"],a:1,why:"0.15 × 20,000 = 3,000, which exceeds the cost of backup, so call it."}},
+
+{e:"🔍",t:"Reading the Clues: Probability & Bayesian Networks",w:"Week 6",demo:"bayes",
+story:"The lab says the fingerprint matches, and their test is 95% accurate. Case closed? Not so fast. In this city, evidence lies, and the only honest way to update my suspicions is Bayes.",
+pts:["A <b>random variable</b> maps uncertain outcomes to values; a <b>distribution</b> sums to 1. <b>Conditional probability</b> P(A|B) restricts attention to cases where B holds: the Phantom struck on 24 of 30 rainy nights, so P(strike | rain) = 80%.",
+"<b>Bayes’ theorem</b>: <code>P(H|D) = P(D|H)·P(H) / P(D)</code>, with prior, likelihood and posterior. Do not confuse P(flag | guilty) with P(guilty | flag).",
+"The trap: 1% of 10,000 suspects are accomplices (prior). The lab flags 95% of the guilty and also 10% of the innocent. That is 95 guilty plus 990 innocent flagged, so P(guilty | flagged) = 95/1085 ≈ <b>8.76%</b>. Try the sliders below.",
+"A <b>Bayesian network</b> is a directed acyclic graph with a conditional probability table (CPT) per node. It factorizes the joint distribution into small pieces. Fork: Phantom nearby → camera glitch and → radio ping. Collider: alarm caused by the Phantom <i>or</i> a stray cat. Spot the cat and the Phantom becomes less likely: <b>explaining away</b>.",
+"<b>Inference</b>: exact by enumeration or variable elimination; approximate by sampling (prior, rejection, likelihood weighting, Gibbs). Models must be validated; they are only as good as their assumptions."],
+code:"def posterior(prior, sens, fpr):\n    p_flag = sens * prior + fpr * (1 - prior)   # P(flagged), total probability\n    return sens * prior / p_flag               # Bayes' theorem\nprint(posterior(0.01, 0.95, 0.10))   # 0.0876 -> only 8.76% guilty",
+fact:"Thomas Bayes’ essay was published after his death, in 1763. Judea Pearl’s work in the 1980s made Bayesian networks a core AI tool.",
+q:{q:"Why does a lab that flags 95% of the guilty still leave only about a 9% chance that a flagged suspect is guilty?",o:["The lab is broken","Guilty people are rare, so false flags outnumber true ones","Bayes’ theorem does not apply"],a:1,why:"A low base rate (1%) means most flags come from the huge innocent group."}},
+
+{e:"🌫️",t:"Shadows in the Fog: Hidden Markov Models",w:"Week 7",
+story:"I can’t see where the Phantom is hiding. All I get are noisy clues: a camera glitch, a radio ping, a whiff of cigar smoke. The truth is a hidden state, and I have to track it through the fog.",
+pts:["An HMM has <b>hidden states</b> that change over time (the Phantom is <i>Hiding</i> or <i>Moving</i>) and <b>observations</b> that depend on them (radio ping, quiet). The <b>Markov assumption</b>: the next state depends only on the current one.",
+"Two tables define it: <b>transitions</b> P(next | current) and <b>emissions</b> P(observation | state). Each row sums to 1. Example: Hiding→Moving = 0.10, Moving→Hiding = 0.20; a ping is more likely while Moving.",
+"<b>Prediction</b>: p<sub>t+1</sub> = p<sub>t</sub> × T. Starting certain of Hiding with the matrix [[0.9,0.1],[0.2,0.8]] gives (0.9, 0.1). A ping then <i>updates</i> the belief to about (0.56, 0.44).",
+"<b>Filtering</b> estimates the current state from all evidence so far (<i>sums</i> over paths). <b>Smoothing</b> revises past states using later evidence. <b>Viterbi</b> finds the single most likely whole route (uses <i>max</i>).",
+"Uses: speech recognition, gesture tracking, tracking moving targets, machine health monitoring, bioinformatics."],
+code:"T = [[0.9, 0.1], [0.2, 0.8]]   # rows: from Hiding, from Moving\nE = [[0.1, 0.9], [0.7, 0.3]]   # [P(ping), P(quiet)] in Hiding / Moving\ndef predict(b):\n    return [sum(b[i] * T[i][j] for i in range(2)) for j in range(2)]\ndef filter_step(b, obs):        # obs 0 = ping, 1 = quiet\n    b = predict(b)\n    b = [b[s] * E[s][obs] for s in range(2)]\n    z = sum(b)\n    return [x / z for x in b]\nprint(filter_step([1.0, 0.0], 0))   # [0.5625, 0.4375] after a radio ping",
+fact:"Andrew Viterbi published his algorithm in 1967 for decoding noisy communication signals.",
+q:{q:"Filtering uses SUM over earlier states. What does Viterbi use?",o:["MAX, to keep the best route","MIN","Average"],a:0,why:"Viterbi asks for the single best sequence, so it keeps the maximum at each step."}},
+
+{e:"🗂️",t:"The Case Files: Classical Machine Learning",w:"Week 9",
+story:"Down in the archive, a thousand old case files gather dust. Maybe I don’t have to write every rule by hand. Let the files teach a model what a Phantom job looks like.",
+pts:["Classical programming: humans write rules. <b>ML</b>: a model ŷ = f<sub>θ</sub>(x) is fitted to data. Three paradigms: <b>supervised</b> (case files with known outcomes), <b>unsupervised</b> (find structure, no labels), <b>reinforcement</b> (learn from reward).",
+"<b>Regression</b> predicts a number (e.g. the loss of a heist). Linear regression ŷ = wx + b minimizes MSE = (1/n)Σ(y−ŷ)². <b>Classification</b> predicts a class (Phantom job or not); <b>logistic regression</b> squeezes a score through the sigmoid σ(z) = 1/(1+e<sup>−z</sup>) into a probability.",
+"<b>Decision trees</b> are readable if–then splits (night? vault district? high-value loot?) but can overfit. A <b>random forest</b> averages many trees trained on varied data to be more stable.",
+"<b>K-means</b> clusters unlabelled cases, for example by place and time: assign points to the nearest centre, move centres to the mean, repeat.",
+"Evaluate with Precision = TP/(TP+FP), Recall = TP/(TP+FN), F1, and a held-out test set. <b>High accuracy ≠ good decisions</b>: on imbalanced files a model can look great and miss every Phantom job."],
+code:"from sklearn.linear_model import LogisticRegression\nmodel = LogisticRegression().fit(X_train, y_train)    # old case files\np = model.predict_proba([[3, 9.5]])[0, 1]             # 3 a.m., high-value loot\nif p > 2000 / 10000: print('Send backup')            # ML + decision theory",
+fact:"Random forests were introduced by Leo Breiman in 2001.",
+q:{q:"99% of old case files are ordinary thefts. A model always says “not a Phantom job”. What are its accuracy and recall for Phantom jobs?",o:["99% and 99%","99% and 0%","1% and 0%"],a:1,why:"It is right 99% of the time but finds none of the Phantom jobs, so recall is 0."}},
+
+{e:"🏙️",t:"Street Smarts: MDPs & Reinforcement Learning",w:"Week 5",
+story:"No map exists for this city’s back streets. Every move teaches me something: a reward for a good lead, a penalty for a dead end. Years on the beat turn into a policy that tells me what to do at every corner.",
+pts:["A <b>Markov decision process</b> has states (where Algo is and what he knows), actions (follow a lead, wait, call the informant), transition probabilities P(s′|s,a), rewards (+10 good lead, −1 per minute, −5 dead end) and a discount γ. Search returns a <i>path</i>; an MDP solution is a <b>policy</b> π(s): what to do at every corner.",
+"<b>Return</b> G = R₁ + γR₂ + γ²R₃ + … Three leads paying 5, 10, 20 with γ=0.9 give 5 + 9 + 16.2 = 30.2. Reward is immediate; <b>value</b> is long-term. <b>V(s)</b> rates places; <b>Q(s,a)</b> rates actions in places.",
+"<b>Bellman idea</b>: value = immediate reward + discounted value of what follows. <b>Value iteration</b> repeats this backup until values settle; information about the hideout flows backward along the streets.",
+"If the city’s rules are unknown, use <b>reinforcement learning</b>. Algo must balance <b>exploration</b> (try an unknown alley) and <b>exploitation</b> (use the best known lead); ε-greedy takes a random action with probability ε.",
+"<b>Q-learning</b> updates <code>Q ← Q + α[r + γ·max Q(s′,·) − Q]</code>. α = learning rate, γ = discount, ε = exploration. <b>SARSA</b> is the on-policy cousin. For huge state spaces, <b>DQN</b> uses a neural network for Q; <b>actor–critic</b> learns a policy and a value together. Real systems need hard safety limits, not just reward."],
+code:"q, r, best_next, alpha, gamma = 4.0, 2.0, 8.0, 0.5, 0.9\n# q = Q(Harbor, follow lead), r = reward, best_next = max Q(Bar, .)\ntarget = r + gamma * best_next      # 9.2\nq = q + alpha * (target - q)        # 6.6\nprint(q)",
+fact:"Q-learning was introduced by Chris Watkins in 1989; DeepMind’s DQN learned to play Atari games from pixels (Nature, 2015).",
+q:{q:"Q(Harbor, follow lead)=4, reward r=2, max Q(Bar,·)=8, γ=0.9, α=0.5. What is the new Q?",o:["9.2","6.6","5.2"],a:1,why:"Target = 2 + 0.9·8 = 9.2; error = 5.2; new Q = 4 + 0.5·5.2 = 6.6."}}
+];
+const m2=(a,b,o)=>({...a,...o,pts:[...a.pts,...b.pts],code:a.code+"\n\n"+b.code,fact:a.fact+"<br>💡 "+b.fact,q:[a.q,b.q]});
+const C=[C0[0],
+m2(C0[1],C0[2],{t:"The Chase: Search & A*",w:"Week 2",e:"🧭",story:"The Phantom could be in any alley of Neon City. Every street is a branch, every junction a choice. Check every alley? Follow one lead to the bitter end? Take the cheapest road first? Then an informant whispers: “He’s headed south-east.” That whisper is a heuristic, and it is the heart of A*."}),
+C0[3],C0[4],{...C0[9],w:"Week 5"},{...C0[6],w:"Week 6"},{...C0[7],w:"Week 7"},{...C0[5],w:"Week 8"},{...C0[8],w:"Week 9"}];
+const END={e:"🕵️",t:"Case Closed! Credits, Sources & AI Disclosure"};
+const $=s=>document.querySelector(s),app=$("#app"),nav=$("#nav");
+const score={};
+function el(t,c,h){const x=document.createElement(t);if(c)x.className=c;if(h!=null)x.innerHTML=h;return x}
+function bayes(){
+ const d=el("div","card demo");
+ d.innerHTML='<div class="tag">Interactive · Evidence calculator</div><label>Share of suspects who are guilty: <b id="v1">1</b>%<input id="r1" type="range" min="0.1" max="30" step="0.1" value="1"></label><label>Lab flags the guilty, P(flag | guilty): <b id="v2">95</b>%<input id="r2" type="range" min="50" max="100" value="95"></label><label>Lab flags the innocent, P(flag | innocent): <b id="v3">10</b>%<input id="r3" type="range" min="0" max="40" value="10"></label><p>P(guilty | flagged) = <span class="big" id="out">8.76%</span></p>';
+ setTimeout(()=>{const f=()=>{const a=+$("#r1").value/100,s=+$("#r2").value/100,fp=+$("#r3").value/100;
+  $("#v1").textContent=(a*100).toFixed(1);$("#v2").textContent=s*100;$("#v3").textContent=fp*100;
+  const pd=s*a+fp*(1-a);$("#out").textContent=(pd?100*s*a/pd:0).toFixed(2)+"%"};
+  ["r1","r2","r3"].forEach(i=>$("#"+i).oninput=f);f()},0);
+ return d}
+function quiz(c,i){const w=el("div");[].concat(c.q).forEach((q,k)=>w.append(quiz1(q,i+"-"+k)));return w}
+function quiz1(q,i){
+ const b=el("div","card");b.append(el("div","tag","🔎 Crack the case"),el("p",null,"<b>"+q.q+"</b>"));
+ const w=el("div","why");
+ q.o.forEach((o,k)=>{const x=el("button","opt",o);x.onclick=()=>{
+  b.querySelectorAll(".opt").forEach(y=>y.disabled=true);
+  x.classList.add(k===q.a?"ok":"no");if(k!==q.a)b.querySelectorAll(".opt")[q.a].classList.add("ok");
+  w.textContent=(k===q.a?"Correct! ":"Not quite. ")+q.why;score[i]=k===q.a;upd()};b.append(x)});
+ b.append(w);return b}
+function upd(){const n=Object.values(score).filter(Boolean).length,t=Object.keys(score).length;const s=$("#sc");if(s)s.textContent=t?`Quiz score: ${n}/${t}`:""}
+function pager(i){
+ const p=el("div","pager"),prev=i>1?"#ch"+(i-1):"#cover",next=i<C.length?"#ch"+(i+1):"#end";
+ p.innerHTML=`<a class="btn" style="background:var(--ink);color:var(--bg)" href="${prev}">← Back</a><a class="btn" href="${next}">Next →</a>`;return p}
+function chapter(i){
+ const c=C[i-1];app.innerHTML="";
+ const top=el("div","toprow");top.append(el("div","tag",`Act ${i} · ${c.w}`),el("span","sfx",["CLICK!","SCREECH!","TICK-TOCK","SLAM!","THUD!","HMMM…","SHHH…","KA-CHING!","FLASH!"][i-1]||""));
+ app.append(top,el("h2",null,c.e+" "+c.t),el("div","card story","<span class='who'>🕵️ ALGO</span>"+c.story));
+ const ul=el("ul",null,c.pts.map(p=>"<li>"+p+"</li>").join(""));app.append(el("div","card",""));app.lastChild.append(el("div","tag","Key ideas"),ul);
+ if(c.code){const k=el("div","card");k.append(el("div","tag","Python"));const pre=el("pre");pre.textContent=c.code;k.append(pre);app.append(k)}
+ if(c.demo==="bayes")app.append(bayes());
+ app.append(el("div","fact","💡 <b>Did you know?</b> "+c.fact),quiz(c,i),pager(i))}
+function cover(){
+ const bst=[...Array(24)].map((_,k)=>{const a=k*Math.PI/12,r=k%2?21:34;return (350+r*Math.cos(a)).toFixed(0)+","+(205+r*Math.sin(a)).toFixed(0)}).join(" ");
+ app.innerHTML=`<div class="cover"><div class="issue"><span>AI FUNDAMENTALS</span><span>CASE NO. 1</span></div>
+<div class="ttl"><h1>Detective Algo</h1></div>
+<svg class="art" viewBox="0 0 400 250" role="img" aria-label="Detective Algo in a trench coat and fedora holding a magnifying glass on a rainy night street in Neon City">
+<defs><pattern id="bd" width="7" height="7" patternUnits="userSpaceOnUse"><circle cx="3.5" cy="3.5" r="1.4" fill="#e8212c" opacity=".3"/></pattern>
+<pattern id="wd" width="13" height="15" patternUnits="userSpaceOnUse"><rect x="3" y="3" width="6" height="8" fill="#ffd400" opacity=".8"/></pattern></defs>
+<rect width="400" height="250" fill="#14213d"/>
+<circle cx="285" cy="52" r="30" fill="#ffd400" stroke="#111" stroke-width="3"/>
+<g stroke="#111" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+<rect x="-5" y="95" width="65" height="160" fill="#0b1020"/><rect x="-5" y="95" width="65" height="160" fill="url(#wd)" stroke="none"/>
+<rect x="58" y="62" width="48" height="190" fill="#0b1020"/><rect x="58" y="62" width="48" height="190" fill="url(#wd)" stroke="none"/>
+<rect x="198" y="82" width="60" height="170" fill="#0b1020"/><rect x="198" y="82" width="60" height="170" fill="url(#wd)" stroke="none"/>
+<rect x="256" y="125" width="52" height="130" fill="#0b1020"/><rect x="256" y="125" width="52" height="130" fill="url(#wd)" stroke="none"/>
+<rect x="348" y="100" width="60" height="150" fill="#0b1020"/>
+<polygon points="333,80 285,250 385,250" fill="#ffd400" opacity=".3" stroke="none"/>
+<rect x="330" y="70" width="7" height="180" fill="#111"/><path d="M322 74 h23 l-4 -12 h-15z" fill="#ffd400"/>
+<rect y="218" width="400" height="40" fill="#0b1020"/>
+<rect width="400" height="250" fill="url(#bd)" stroke="none"/>
+<path d="M20 232 h30 M90 240 h40 M230 234 h36" fill="none" stroke="#ffffff55" stroke-width="2"/>
+<path d="M112 250 L120 152 Q150 136 182 152 L192 250 Z" fill="#9c8a62"/>
+<path d="M150 142 L136 168 L150 196 L164 168 Z" fill="#fff" stroke-width="2"/><path d="M150 160 l-5 12 l5 16 l5 -16 z" fill="#e8212c" stroke-width="2"/>
+<circle cx="150" cy="118" r="20" fill="#f2c9a0"/>
+<rect x="130" y="110" width="40" height="9" fill="#111"/>
+<ellipse cx="150" cy="103" rx="38" ry="8" fill="#111"/><path d="M127 103 Q128 72 150 72 Q172 72 173 103 Z" fill="#111"/><rect x="128" y="94" width="45" height="6" fill="#e8212c" stroke-width="2"/>
+<path d="M186 172 L212 150" fill="none" stroke-width="6"/><path d="M214 152 L202 166" fill="none" stroke="#ffd400" stroke-width="5"/>
+<circle cx="228" cy="140" r="17" fill="#cfe8ff" fill-opacity=".55"/>
+<path d="M214 130 l5 -4" fill="none" stroke="#fff" stroke-width="2"/>
+<path d="M14 12 h160 a10 10 0 0 1 10 10 v22 a10 10 0 0 1 -10 10 h-60 l-12 12 l0 -12 h-88 a10 10 0 0 1 -10 -10 v-22 a10 10 0 0 1 10 -10z" fill="#fff"/>
+<polygon points="${bst}" fill="#ffd400"/>
+</g>
+<g stroke="#ffffff66" stroke-width="1.5"><path d="M30 70 l-5 12 M70 120 l-5 12 M120 60 l-5 12 M180 130 l-5 12 M240 70 l-5 12 M300 150 l-5 12 M360 130 l-5 12 M20 160 l-5 12 M270 190 l-5 12 M110 200 l-5 12 M380 60 l-5 12 M210 20 l-5 12"/></g>
+<text x="350" y="211" text-anchor="middle" font-family="Bangers,Impact,sans-serif" font-size="19" fill="#e8212c">CLUE!</text>
+<text x="86" y="37" text-anchor="middle" font-family="Comic Neue,sans-serif" font-weight="700" font-size="15" fill="#111">Every clue is data…</text>
+</svg>
+<div class="go"><div class="rib">Case #1 · The Vanishing of the Golden Dataset</div>
+<p><a class="btn lg" href="#ch1">LET’S GO!</a></p></div>
+<div class="by">Created by <b>Tuyaqbai Alibi</b> &amp; <b>Orazaly Nurkhan</b></div></div>`}
+function end(){
+ app.innerHTML="";
+ app.append(el("h2",null,END.e+" "+END.t),el("div","card","<b>Case closed: the Phantom is behind bars.</b> Along the way Algo learned to <i>specify</i> a task (agents), <i>search</i> for routes, <i>optimize</i> configurations, <i>outwit</i> rivals, <i>decide</i> under uncertainty, <i>reason</i> about hidden facts, <i>learn</i> from data, and <i>improve through experience</i>. All of AI is a variation on one loop: perceive, reason, act, learn."),
+ el("div","card","<div class='tag'>Sources and further reading</div><ul><li>Russell, S. &amp; Norvig, P. <i>Artificial Intelligence: A Modern Approach</i>, 4th ed. (2020).</li><li>Sutton, R. &amp; Barto, A. <i>Reinforcement Learning: An Introduction</i>, 2nd ed. (2018).</li><li>Hart, Nilsson &amp; Raphael (1968). A formal basis for the heuristic determination of minimum cost paths.</li><li>Kirkpatrick, Gelatt &amp; Vecchi (1983). Optimization by simulated annealing. <i>Science</i>.</li><li>Pearl, J. (1988). <i>Probabilistic Reasoning in Intelligent Systems</i>.</li><li>Rabiner, L. (1989). A tutorial on hidden Markov models. <i>Proc. IEEE</i>.</li><li>Breiman, L. (2001). Random forests. <i>Machine Learning</i>.</li><li>Mnih et al. (2015). Human-level control through deep reinforcement learning. <i>Nature</i>.</li><li>Course lectures, AI Fundamentals, Weeks 1–9.</li></ul>"),
+ el("div","card","<div class='tag'>Generative AI disclosure</div>Claude (Anthropic) was used only as a technical helper to build this website: setting up the page structure, layout, styling and interactive code. The research was done by the team: we searched for and selected the materials, decided what to include, and prepared the content from the course lectures and the sources listed above. The team also reviewed the final text, formulas and examples and takes responsibility for the content."),
+ el("div","card","<div class='tag'>Team</div>Tuyaqbai Alibi &amp; Orazaly Nurkhan"),
+ el("p",null,'<a class="btn" href="#cover">↺ Back to cover</a>'))}
+function route(){
+ const h=cur;
+ nav.innerHTML='<a href="#cover" class="'+(h==="cover"?"on":"")+'">Cover</a>'+C.map((c,i)=>`<a href="#ch${i+1}" class="${h==="ch"+(i+1)?"on":""}">${i+1}</a>`).join("")+`<a href="#end" class="${h==="end"?"on":""}">End</a><span id="sc" style="margin-left:auto;align-self:center;color:var(--mut);white-space:nowrap"></span>`;
+ const m=h.match(/^ch(\d+)$/);
+ if(m&&C[m[1]-1])chapter(+m[1]);else if(h==="end")end();else cover();
+ upd();window.scrollTo(0,0);
+ const i=idxOf(),dir=i>curIdx?"in-r":i<curIdx?"in-l":"";curIdx=i;
+ app.classList.remove("in-r","in-l");void app.offsetWidth;if(dir)app.classList.add(dir);
+ $("#prev").disabled=i===0;$("#next").disabled=i===ORDER.length-1}
+const ORDER=["cover",...C.map((_,i)=>"ch"+(i+1)),"end"];
+let cur=location.hash.slice(1)||"cover";if(!ORDER.includes(cur))cur="cover";let curIdx=idxOf();
+function idxOf(){const i=ORDER.indexOf(cur);return i<0?0:i}
+function show(k){if(!ORDER.includes(k))k="cover";cur=k;try{if((location.hash.slice(1)||"cover")!==k)location.hash=k}catch(e){}route()}
+function go(d){const j=idxOf()+d;if(j>=0&&j<ORDER.length)show(ORDER[j])}
+addEventListener("click",e=>{const a=e.target.closest&&e.target.closest('a[href^="#"]');if(!a)return;e.preventDefault();show(a.getAttribute("href").slice(1))});
+$("#prev").onclick=()=>go(-1);$("#next").onclick=()=>go(1);
+addEventListener("keydown",e=>{if(e.altKey||e.ctrlKey||e.metaKey||e.shiftKey)return;
+ if(/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName))return;
+ if(e.key==="ArrowRight")go(1);else if(e.key==="ArrowLeft")go(-1)});
+let tx=0,ty=0,tOK=false;
+addEventListener("touchstart",e=>{const t=e.touches[0];tx=t.clientX;ty=t.clientY;
+ tOK=e.touches.length===1&&!e.target.closest("pre,nav,input,textarea,select")},{passive:true});
+addEventListener("touchend",e=>{if(!tOK)return;tOK=false;const t=e.changedTouches[0],dx=t.clientX-tx,dy=t.clientY-ty;
+ if(Math.abs(dx)>60&&Math.abs(dx)>1.6*Math.abs(dy))go(dx<0?1:-1)},{passive:true});
+addEventListener("hashchange",()=>{const k=location.hash.slice(1)||"cover";if(k!==cur)show(k)});route();
+</script>
+</body>
+</html>
